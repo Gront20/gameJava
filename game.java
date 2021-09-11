@@ -50,9 +50,10 @@ public class game {
                         help.help(nec, repeat);
                         System.out.print("Enter your move: ");
                         playerMove = getPlayerMove();
-                    } else if (playerMove.equals("0")) 
+                    }
+                    if (playerMove.equals("0")) 
                     {
-                        flag = false;
+                        break;
                     }
                     if (Integer.parseInt(playerMove) > neclen)
                         System.out.println("Error, wrong number");
