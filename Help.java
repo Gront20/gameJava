@@ -9,7 +9,7 @@ import java.util.*;
 import java.lang.String;
 
 public class Help { 
-    public static String help(String z[], int[] RandomNum)
+    public static String help(String z[], int repeat)
     {
         String header = "";
         String[] sts = {"Draw", "WIN", "LOSE"};
@@ -26,28 +26,29 @@ public class Help {
         }
         header += (getFormatDash(z) + prob.replace("|", "+") + getFormatInputs(z,prob.replace("|", "+")).replaceAll("[a-zA-Z0-9 ]", "-") + " \n");
         System.out.print(header);
-        for (int x = 0; x <= z.length-1; x++)
-        {
-         header = z[x];
-         if (getMaxLen(z) <= "  \\User".length()) 
-         {
-              header += String.format("%2s", prob);
-         }
-         else header += String.format("%" + String.valueOf(getMaxLen(z)-z[x].length()) + "s", prob);
-         for (int j = 0; j < z.length; j++){
-                 if (x == j){
-                     header += getFormatConditions(z, sts, j)[0];
-                     header += prob;
-                 }
-                 else if (RandomNum[j+x] % 2 == 0){
-                     header += getFormatConditions(z, sts,j)[1];
-                     header += prob;
-                 }
-                 else if (RandomNum[j+x] % 2 != 0) {
-                     header += getFormatConditions(z, sts,j)[2];
-                     header += prob;
-                 }
-         }
+            for (int x = 0; x <= z.length-1; x++)
+            {
+             header = z[x];
+             if (getMaxLen(z) <= "  \\User".length()) 
+             {
+                  header += String.format("%2s", prob);
+             }
+             else header += String.format("%" + String.valueOf(getMaxLen(z)-z[x].length()) + "s", prob);
+             for (int j = 0; j < z.length; j++){
+                     if (x == j){
+                         header += getFormatConditions(z, sts, j)[0];
+                         header += prob;
+                     }
+                     else if (j > x + repeat || ((x > j) && (x <= j + repeat))|| (x >=repeat && j > x + repeat)) { 
+                         header += getFormatConditions(z, sts,j)[2];
+                         header += prob;
+                     }
+                     else {
+                         header += getFormatConditions(z, sts,j)[1];
+                         header += prob;
+                     } 
+
+             }
          System.out.println(header);
          System.out.println(getFormatDash(z) + prob.replace("|", "+") + getFormatInputs(z,prob.replace("|", "+")).replaceAll("[a-zA-Z0-9 ]", "-"));
         }

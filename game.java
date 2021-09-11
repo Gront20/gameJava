@@ -23,13 +23,13 @@ public class game {
     {
       String nec[] = args;
       int neclen = nec.length;
+      int repeat = (nec.length-1)/2;
       Help help = new Help();
       Conditions conditions = new Conditions();
       HMACkey hmak = new HMACkey();
       boolean flag = true;
       int[][] coord = new int[nec.length+1][nec.length+1];
-      int[] randomNumbers = conditions.getRandomNumbers(nec);
-      int[][] coord_New = conditions.getCoordList(nec, coord, randomNumbers);
+      int[][] coord_New = conditions.getCoordList(nec, coord, repeat);
       while (flag == true) {
         if (neclen < 3 || neclen % 2 == 0) {
                 System.out.println("Error. Wrong parameters. Please, input the correct numbers of words (>=3 and odd). For example: cat dog lion");
@@ -46,36 +46,30 @@ public class game {
                     getMenu(nec);
                     System.out.print("Enter your move: ");
                     String playerMove = getPlayerMove();
-                    if (playerMove.equals("?") || playerMove.equals("0"))
+                    if (playerMove.equals("?")){
+                        help.help(nec, repeat);
+                        System.out.print("Enter your move: ");
+                        playerMove = getPlayerMove();
+                    } else if (playerMove.equals("0")) 
                     {
-                        if (playerMove.equals("?")){
-                            help.help(nec, randomNumbers);
-                            System.out.print("Enter your move: ");
-                            playerMove = getPlayerMove();
-                        }
-                        if (playerMove.equals("0")) 
-                        {
-                            flag = false;
-                        }
+                        flag = false;
                     }
-                    else {
-                        
-                        if (Integer.parseInt(playerMove) > neclen)
+                    if (Integer.parseInt(playerMove) > neclen)
                         System.out.println("Error, wrong number");
-                        else {
+                    else {
                             System.out.println("Your move: " + playerMove);
                             System.out.println("Computer move: " + computerMove);
                             if (coord_New[Integer.parseInt(playerMove)][Integer.parseInt(computerMove)] == 2)
                                 System.out.println("Game is Tie !!");         
                             else {
-                                if (coord_New[Integer.parseInt(playerMove)][Integer.parseInt(computerMove)] == 1)
+                                if (coord_New[Integer.parseInt(playerMove)][Integer.parseInt(computerMove)] == 0)
                                     System.out.println("You win");
-                                else if (coord_New[Integer.parseInt(playerMove)][Integer.parseInt(computerMove)] == 0)
+                                else if (coord_New[Integer.parseInt(playerMove)][Integer.parseInt(computerMove)] == 1)
                                     System.out.println("Computer Win");
                             }
                             System.out.println(hmak.generateKey());
                         }
-                    }
+                    
                 } catch (NumberFormatException e) {
                     System.out.println("Error, not a number");
                 }
