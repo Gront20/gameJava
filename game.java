@@ -60,13 +60,10 @@ public class game {
                     else {
                             System.out.println("Your move: " + playerMove);
                             System.out.println("Computer move: " + computerMove);
-                            if (coord_New[Integer.parseInt(playerMove)][Integer.parseInt(computerMove)] == 2)
-                                System.out.println("Game is Tie !!");         
-                            else {
-                                if (coord_New[Integer.parseInt(playerMove)][Integer.parseInt(computerMove)] == 0)
-                                    System.out.println("You win");
-                                else if (coord_New[Integer.parseInt(playerMove)][Integer.parseInt(computerMove)] == 1)
-                                    System.out.println("Computer Win");
+                            switch (coord_New[Integer.parseInt(playerMove)][Integer.parseInt(computerMove)]) {
+                                case 0: System.out.println("You win"); break; 
+                                case 1: System.out.println("Computer Win"); break;
+                                case 2: System.out.println("Game is Tie !!"); break;
                             }
                             System.out.println(hmak.generateKey());
                         }
